@@ -20,8 +20,14 @@ theorem Problem3b {p q r : Prop}(h: p→ (q → r)): (p → q) → (p → r) := 
   apply h_qr h_q
 
 
---theorem Problem3c {p q r : Prop}(h: p ∧ ¬q → r) (h_not_r: ¬r) (h_p: p) : q := by
---  intro h_not_q
+axiom notnotE {p : Prop} (h : ¬ ¬ p) : p
+theorem Problem3c {p q r : Prop}(h: p ∧ ¬q → r) (h_not_r: ¬r) (h_p: p) : q := by
+  have h_nnq: ¬¬q
+  intro h_not_q
+  have h_pnq: p ∧ ¬q := by apply And.intro h_p h_not_q
+  have h_r: r := by apply h h_pnq
+  contradiction
+  apply notnotE h_nnq
 
 -- Example 1.3.1
 example {a b : ℤ} (h1 : a = 2 * b + 5) (h2 : b = 3) : a = 11 :=
