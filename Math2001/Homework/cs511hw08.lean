@@ -71,3 +71,16 @@ example : forall_sufficiently_large n : ℕ, (3:ℤ) ^ n ≥ 2 ^ n + 100 := by
       _ ≥ 2^(n+1) + 100 := by extra
 
 /-Problem5(b)-/
+def sum_of_odds : ℕ → ℕ
+  | 0       => 0
+  | (m + 1) => (2 * m + 1) + sum_of_odds m
+
+theorem sum_of_odds_is_square (p: ℕ) : ∃q: ℕ, sum_of_odds p = q ^ 2 := by
+  use p
+  simple_induction p with n Hn
+  . -- base case
+    simp [sum_of_odds]
+  . -- inductive step
+    simp [sum_of_odds]
+    rw [Hn]
+    ring
